@@ -146,31 +146,32 @@ def create_model(session, forward_only):
 
 def train():
   """Train a en->fr translation model using WMT data."""
-  from_train = None
-  to_train = None
-  from_dev = None
-  to_dev = None
-  if FLAGS.from_train_data and FLAGS.to_train_data:
-    from_train_data = FLAGS.from_train_data
-    to_train_data = FLAGS.to_train_data
-    from_dev_data = from_train_data
-    to_dev_data = to_train_data
-    if FLAGS.from_dev_data and FLAGS.to_dev_data:
-      from_dev_data = FLAGS.from_dev_data
-      to_dev_data = FLAGS.to_dev_data
-    from_train, to_train, from_dev, to_dev, _, _ = data_utils.prepare_data(
-        FLAGS.data_dir,
-        from_train_data,
-        to_train_data,
-        from_dev_data,
-        to_dev_data,
-        FLAGS.from_vocab_size,
-        FLAGS.to_vocab_size)
-  else:
-      # Prepare WMT data.
-      print("Preparing WMT data in %s" % FLAGS.data_dir)
-      from_train, to_train, from_dev, to_dev, _, _ = data_utils.prepare_wmt_data(
-          FLAGS.data_dir, FLAGS.from_vocab_size, FLAGS.to_vocab_size)
+  from_train = '/home/sebastian/python2java/models/tutorials/rnn/translate/data/perl.txt'
+  to_train = '/home/sebastian/python2java/models/tutorials/rnn/translate/data/groovy.txt'
+  from_dev = '/home/sebastian/python2java/models/tutorials/rnn/translate/data/perl.txt'
+  to_dev = '/home/sebastian/python2java/models/tutorials/rnn/translate/data/groovy.txt'
+  
+  #if FLAGS.from_train_data and FLAGS.to_train_data:
+    #from_train_data = FLAGS.from_train_data
+    #to_train_data = FLAGS.to_train_data
+    #from_dev_data = from_train_data
+    #to_dev_data = to_train_data
+    #if FLAGS.from_dev_data and FLAGS.to_dev_data:
+     # from_dev_data = FLAGS.from_dev_data
+     # to_dev_data = FLAGS.to_dev_data
+    #from_train, to_train, from_dev, to_dev, _, _ = data_utils.prepare_data(
+     #   FLAGS.data_dir,
+      #  from_train_data,
+       # to_train_data,
+        #from_dev_data,
+        #to_dev_data,
+        #FLAGS.from_vocab_size,
+        #FLAGS.to_vocab_size)
+  #else:
+      ## Prepare WMT data.
+      #print("Preparing WMT data in %s" % FLAGS.data_dir)
+      #from_train, to_train, from_dev, to_dev, _, _ = data_utils.prepare_wmt_data(
+       #   FLAGS.data_dir, FLAGS.from_vocab_size, FLAGS.to_vocab_size)
 
   with tf.Session() as sess:
     # Create model.
@@ -249,12 +250,14 @@ def decode():
     model.batch_size = 1  # We decode one sentence at a time.
 
     # Load vocabularies.
-    en_vocab_path = os.path.join(FLAGS.data_dir,
-                                 "vocab%d.from" % FLAGS.from_vocab_size)
-    fr_vocab_path = os.path.join(FLAGS.data_dir,
-                                 "vocab%d.to" % FLAGS.to_vocab_size)
-    en_vocab, _ = data_utils.initialize_vocabulary(en_vocab_path)
-    _, rev_fr_vocab = data_utils.initialize_vocabulary(fr_vocab_path)
+    en_vocab_path = '/home/sebastian/python2java/models/tutorials/rnn/translate/perl_vocab.txt'
+    fr_vocab_path = '/home/sebastian/python2java/models/tutorials/rnn/translate/groovy_vocab.txt'
+    #en_vocab_path = os.path.join(FLAGS.data_dir,
+     #                            "vocab%d.from" % FLAGS.from_vocab_size)
+    #fr_vocab_path = os.path.join(FLAGS.data_dir,
+    #                             "vocab%d.to" % FLAGS.to_vocab_size)
+    #en_vocab, _ = data_utils.initialize_vocabulary(en_vocab_path)
+    #_, rev_fr_vocab = data_utils.initialize_vocabulary(fr_vocab_path)
 
     # Decode from standard input.
     sys.stdout.write("> ")
